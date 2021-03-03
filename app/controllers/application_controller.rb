@@ -32,7 +32,7 @@ class ApplicationController < Sinatra::Base
     post '/login' do #make able to log in by username OR email, for now just username
         user = User.find_by(username: params[:info])
         if user && user.authenticate(params[:password])
-            session[:user_id] = user.id
+            @user_id = user.id
             redirect '/home'
         else
             redirect 'failure'
@@ -43,10 +43,19 @@ class ApplicationController < Sinatra::Base
         erb :failure
     end
 
-    #To be moved to user controller from here below
     get '/home' do
         @user = User.find(session[:user_id])
+        @feed = Post.all
         erb :home
+    end
+
+    get '/post' do
+        erb :post
+    end
+
+    post '/post' do
+        Post.create(:content => params[:content], :posted_at => Time.now, :user_id => session[:user_id])
+        redirect '/home'
     end
 
 end
