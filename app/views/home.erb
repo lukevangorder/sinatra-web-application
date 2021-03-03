@@ -1,7 +1,7 @@
 <h1><%= @user.username %></h1>
 <a href='/post'>Make a Post</a></br>
-<a href='/message'>Send a Message</a>
-<% @feed.each do |post| %>
+<a href='/message'>Messages</a>
+<% @feed.reverse_each do |post| %>
     </br>
     <h2><%= User.find(post.user_id).username %></h2>
     <p><%= post.content %></p>

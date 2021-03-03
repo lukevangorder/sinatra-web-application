@@ -35,7 +35,7 @@ class ApplicationController < Sinatra::Base
             @user_id = user.id
             redirect '/home'
         else
-            redirect 'failure'
+            redirect '/failure'
         end
     end
 
@@ -61,6 +61,25 @@ class ApplicationController < Sinatra::Base
     get '/logout' do
         session[:user_id] = nil
         redirect '/'
+    end
+
+    get '/message' do
+        @user_messages = Message.where(reciever_id: session[:user_id])
+        @user = session[:user_id]
+        erb :messages
+    end
+
+    get '/message/new' do
+        erb :newmessage
+    end
+
+    post '/message' do
+        @message = Message.new(:sent_at => Time.now, :content => params[:content], :user_id => session[:user_id], :reciever_id => User.find_by(username: params[:address]))
+        if @message.save
+            redirect '/message'
+        else
+            redirect '/failure'
+        end
     end
 
 end

@@ -10,7 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2) do
+ActiveRecord::Schema.define(version: 4) do
+
+  create_table "messages", force: :cascade do |t|
+    t.string "content"
+    t.string "sent_at"
+    t.integer "user_id"
+    t.integer "reciever_id"
+  end
 
   create_table "posts", force: :cascade do |t|
     t.string "content"
