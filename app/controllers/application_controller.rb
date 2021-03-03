@@ -32,7 +32,7 @@ class ApplicationController < Sinatra::Base
     post '/login' do #make able to log in by username OR email, for now just username
         user = User.find_by(username: params[:info])
         if user && user.authenticate(params[:password])
-            @user_id = user.id
+            session[:user_id] = user.id
             redirect '/home'
         else
             redirect '/failure'
@@ -59,7 +59,7 @@ class ApplicationController < Sinatra::Base
     end
 
     get '/logout' do
-        session[:user_id] = nil
+        session[:user_id].clear
         redirect '/'
     end
 
