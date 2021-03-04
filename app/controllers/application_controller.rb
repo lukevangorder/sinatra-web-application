@@ -82,8 +82,13 @@ class ApplicationController < Sinatra::Base
         end
     end
 
-    get '/post/delete' do
-        binding.pry
+    patch '/post/:id' do
+        
+    end
+
+    delete '/post/:id' do
+        Post.find(params[:id]).destroy
+        redirect '/home'
     end
 
 end
