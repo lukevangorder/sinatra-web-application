@@ -1,0 +1,11 @@
+<a href='/home'>Home</a></br>
+<h2>Edit Post Below:</h2>
+<form method='post' action='/post/<%= @post.id %>'>
+<input id="hidden" type="hidden" name="_method" value="patch">
+<input type='text' name='changes' value="<%= @post.content %>">
+<input type='submit' value='Save Changes'>
+</form>
+<form method='post' action="/post/<%= @post.id %>">
+<input id="hidden" type="hidden" name="_method" value="delete">
+<input type='submit' value='Delete Post'>
+</form>

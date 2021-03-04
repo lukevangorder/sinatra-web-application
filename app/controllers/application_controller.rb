@@ -82,8 +82,16 @@ class ApplicationController < Sinatra::Base
         end
     end
 
+    get '/post/:id' do
+        @post = Post.find(params[:id])
+        erb :postmod
+    end
+
     patch '/post/:id' do
-        
+        post = Post.find(params[:id])
+        post.content = params[:changes]
+        post.save
+        redirect '/home'
     end
 
     delete '/post/:id' do
