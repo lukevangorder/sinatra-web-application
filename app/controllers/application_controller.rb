@@ -82,4 +82,8 @@ class ApplicationController < Sinatra::Base
         end
     end
 
+    get '/post/delete' do
+        binding.pry
+    end
+
 end

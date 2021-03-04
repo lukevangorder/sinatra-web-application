@@ -5,6 +5,10 @@
     </br>
     <h2><%= User.find(post.user_id).username %></h2>
     <p><%= post.content %></p>
+    <% if post.user_id == @user.id %>
+        <form method='post' action="/post/#{post.id}"><input id="hidden" type="hidden" name="_method" value="patch"><input type='submit' value='Edit'></form>
+        <form method='post' action="/post/#{post.id}"><input id="hidden" type="hidden" name="_method" value="delete"><input type='submit' value='Delete'></form>
+    <% end %>
 <% end %>
 <br>
 <a href='/logout'>Log Out</a>

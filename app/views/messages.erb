@@ -1,3 +1,4 @@
+<a href='/home'>Home</a></br>
 <a href='/message/new'>New Message</a>
 <% @user_messages.reverse_each do |message| %>
     <h1><%= User.find(message.user_id).username %></h1>
