@@ -3,10 +3,10 @@
 <a href='/message'>Messages</a>
 <% @feed.reverse_each do |post| %>
     </br>
-    <h2><%= User.find(post.user_id).username %></h2>
+    <h4><%= User.find(post.user_id).username %></h2>
     <p><%= post.content %></p>
     <% if post.user_id == @user.id %>
-        <form method='get' action="/post/<%= post.id %>"><input type='submit' value='Edit'></form>
+        <a href="/post/<%= post.id %>">Edit</a>
     <% end %>
 <% end %>
 <br>
