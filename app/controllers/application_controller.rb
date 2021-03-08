@@ -99,4 +99,8 @@ class ApplicationController < Sinatra::Base
         redirect '/home'
     end
 
+    get 'unique' do
+        erb :username
+    end
+
 end
