@@ -35,6 +35,10 @@ class ApplicationController < Sinatra::Base
 
     post '/login' do #make able to log in by username OR email, for now just username
         user = User.find_by(username: params[:info])
+        if user == nil
+            user = User.find_by(email: params[:info])
+            binding.pry
+        end
         if user && user.authenticate(params[:password])
             session[:user_id] = user.id
             redirect '/home'
