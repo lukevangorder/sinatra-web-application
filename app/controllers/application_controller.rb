@@ -17,11 +17,15 @@ class ApplicationController < Sinatra::Base
 
     post '/signup' do
         @user = User.new(:email => params[:email], :username => params[:username], :password => params[:password])
-        if @user.save
-            session[:user_id] = User.last.id
-            redirect '/home'
+        if User.find_by(username: params[:username])
+            redirect '/unique'
         else
-            redirect "/failure"
+            if @user.save
+                session[:user_id] = User.last.id
+                redirect '/home'
+            else
+                redirect "/failure"
+            end
         end
     end
 
@@ -59,7 +63,7 @@ class ApplicationController < Sinatra::Base
     end
 
     get '/logout' do
-        session[:user_id].clear
+        session.clear
         redirect '/'
     end
 
@@ -99,7 +103,7 @@ class ApplicationController < Sinatra::Base
         redirect '/home'
     end
 
-    get 'unique' do
+    get '/unique' do
         erb :username
     end
 
