@@ -37,7 +37,6 @@ class ApplicationController < Sinatra::Base
         user = User.find_by(username: params[:info])
         if user == nil
             user = User.find_by(email: params[:info])
-            binding.pry
         end
         if user && user.authenticate(params[:password])
             session[:user_id] = user.id
@@ -52,19 +51,24 @@ class ApplicationController < Sinatra::Base
     end
 
     get '/home' do
+        binding.pry
         @user = User.find(session[:user_id])
         @feed = Post.all
         erb :home
     end
 
-    get '/post' do
-        erb :post
-    end
+    # get '/post' do
+    #     erb :post
+    # end
 
-    post '/post' do
-        Post.create(:content => params[:content], :posted_at => Time.now, :user_id => session[:user_id])
-        redirect '/home'
-    end
+    # post '/post' do
+    #     if params[:content] = ""
+    #         redirect '/home'
+    #     else
+    #         Post.create(:content => params[:content], :posted_at => Time.now, :user_id => session[:user_id])
+    #         redirect '/home'
+    #     end
+    # end
 
     get '/logout' do
         session.clear
@@ -72,9 +76,11 @@ class ApplicationController < Sinatra::Base
     end
 
     get '/message' do
-        @user_messages = Message.where(reciever_id: session[:user_id])
+        # @user_messages = Message.where(reciever_id: session[:user_id])
+        
         @user = session[:user_id]
-        binding.pry
+        @user_messages = User.find(@user).messages
+
         erb :messages
     end
 
@@ -83,9 +89,9 @@ class ApplicationController < Sinatra::Base
     end
 
     post '/message' do
-        binding.pry
+
         @message = Message.create(:sent_at => Time.now, :content => params[:content], :user_id => session[:user_id], :reciever_id => User.find_by(username: params[:address]).id)
-        binding.pry
+
         if @message.save
             redirect '/message'
         else
@@ -93,22 +99,28 @@ class ApplicationController < Sinatra::Base
         end
     end
 
-    get '/post/:id' do
-        @post = Post.find(params[:id])
-        erb :postmod
-    end
+    # get '/post/:id' do
+    #     @post = Post.find(params[:id])
+    #     if session[:user_id] == @post.user_id
+    #         erb :postmod
+    #     else
+    #         redirect :home
+    #     end
+    # end
 
-    patch '/post/:id' do
-        post = Post.find(params[:id])
-        post.content = params[:changes]
-        post.save
-        redirect '/home'
-    end
+    # patch '/post/:id' do
+        
+    #     post = Post.find(params[:id])
+        
+    #     post.content = params[:changes]
+    #     post.save
+    #     redirect '/home'
+    # end
 
-    delete '/post/:id' do
-        Post.find(params[:id]).destroy
-        redirect '/home'
-    end
+    # delete '/post/:id' do
+    #     Post.find(params[:id]).destroy
+    #     redirect '/home'
+    # end
 
     get '/unique' do
         erb :username
