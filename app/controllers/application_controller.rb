@@ -50,12 +50,11 @@ class ApplicationController < Sinatra::Base
         erb :failure
     end
 
-    get '/home' do
-        binding.pry
-        @user = User.find(session[:user_id])
-        @feed = Post.all
-        erb :home
-    end
+    # get '/home' do
+    #     @user = User.find(session[:user_id])
+    #     @feed = Post.all
+    #     erb :home
+    # end
 
     # get '/post' do
     #     erb :post
