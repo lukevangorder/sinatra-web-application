@@ -74,6 +74,7 @@ class ApplicationController < Sinatra::Base
     get '/message' do
         @user_messages = Message.where(reciever_id: session[:user_id])
         @user = session[:user_id]
+        binding.pry
         erb :messages
     end
 
@@ -82,7 +83,9 @@ class ApplicationController < Sinatra::Base
     end
 
     post '/message' do
-        @message = Message.new(:sent_at => Time.now, :content => params[:content], :user_id => session[:user_id], :reciever_id => User.find_by(username: params[:address]))
+        binding.pry
+        @message = Message.create(:sent_at => Time.now, :content => params[:content], :user_id => session[:user_id], :reciever_id => User.find_by(username: params[:address]).id)
+        binding.pry
         if @message.save
             redirect '/message'
         else
