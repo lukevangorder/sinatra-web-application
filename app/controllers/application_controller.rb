@@ -75,29 +75,29 @@ class ApplicationController < Sinatra::Base
         redirect '/'
     end
 
-    get '/message' do
-        # @user_messages = Message.where(reciever_id: session[:user_id])
+    # get '/message' do
+    #     # @user_messages = Message.where(reciever_id: session[:user_id])
         
-        @user = session[:user_id]
-        @user_messages = User.find(@user).messages
+    #     @user = session[:user_id]
+    #     @user_messages = User.find(@user).messages
 
-        erb :messages
-    end
+    #     erb :messages
+    # end
 
-    get '/message/new' do
-        erb :newmessage
-    end
+    # get '/message/new' do
+    #     erb :newmessage
+    # end
 
-    post '/message' do
+    # post '/message' do
 
-        @message = Message.create(:sent_at => Time.now, :content => params[:content], :user_id => session[:user_id], :reciever_id => User.find_by(username: params[:address]).id)
+    #     @message = Message.create(:sent_at => Time.now, :content => params[:content], :user_id => session[:user_id], :reciever_id => User.find_by(username: params[:address]).id)
 
-        if @message.save
-            redirect '/message'
-        else
-            redirect '/failure'
-        end
-    end
+    #     if @message.save
+    #         redirect '/message'
+    #     else
+    #         redirect '/failure'
+    #     end
+    # end
 
     # get '/post/:id' do
     #     @post = Post.find(params[:id])
