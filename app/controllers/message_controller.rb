@@ -1,7 +1,7 @@
 class MessageController < Sinatra::Base
 
     configure do
-        set :views, 'app/views'
+        set :views, 'app/views/messages'
         set :public_folder, 'public'
         enable :sessions
         set :session_secret, "secret"

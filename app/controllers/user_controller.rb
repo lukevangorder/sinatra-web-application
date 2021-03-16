@@ -1,7 +1,7 @@
 class UserController < Sinatra::Base
 
     configure do
-        set :views, 'app/views'
+        set :views, 'app/views/users'
         set :public_folder, 'public'
         enable :sessions
         set :session_secret, "secret"
